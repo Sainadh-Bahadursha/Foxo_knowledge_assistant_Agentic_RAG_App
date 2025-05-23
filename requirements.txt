@@ -3,7 +3,7 @@ langchain-community
 langchain-openai
 openai
 faiss-cpu
-pymupdf
+PyMuPDF
 python-docx
 streamlit
 aiohttp
