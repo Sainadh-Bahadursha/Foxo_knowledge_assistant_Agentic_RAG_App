@@ -21,34 +21,15 @@ class FileLoader:
     def _load_pdf(self, path: str):
         doc = fitz.open(path)
         for page_num, page in enumerate(doc, start=1):
-            text = page.get_text()
-            images = page.get_images(full=True)
-            image_refs = []
-
-            for img_index, img in enumerate(images):
-                xref = img[0]
-                base_image = doc.extract_image(xref)
-                image_bytes = base_image["image"]
-                img_ext = base_image["ext"]
-                image_name = f"{os.path.basename(path)}_page{page_num}_img{img_index}.{img_ext}"
-                image_path = os.path.join("data", "images", image_name)
-
-                # Save image locally
-                os.makedirs(os.path.dirname(image_path), exist_ok=True)
-                with open(image_path, "wb") as img_file:
-                    img_file.write(image_bytes)
-
-                image_refs.append({
-                    "page": page_num,
-                    "path": image_path
-                })
+            page_text = page.get_text()
+            full_text = f"Page {page_num} of {os.path.basename(path)}\n{page_text.strip()}"
 
             self.documents.append({
                 "filename": os.path.basename(path),
                 "page": page_num,
                 "type": "pdf",
-                "text": text.strip(),
-                "images": image_refs
+                "text": full_text,
+                "images": []
             })
 
     def _load_txt(self, path: str):

@@ -5,7 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 
-load_dotenv()  # Load API keys from .env
+load_dotenv()
 
 class FAISSIndexer:
     def __init__(self, persist_dir: str = "vectorstore"):
@@ -16,15 +16,15 @@ class FAISSIndexer:
     def _chunk_documents(self, documents: List[Dict]) -> List[str]:
         chunks = []
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=60,
-            separators=["\n\n", "\n"]
+            chunk_size=1000,
+            chunk_overlap=200,
+            separators=["\n\n", "\n", ".", " "]
         )
 
         for doc in documents:
             metadata = f"\n\n[Source: {doc['filename']}, Page: {doc.get('page', 'N/A')}]"
             chunks += [chunk + metadata for chunk in splitter.split_text(doc['text'])]
-        
+
         return chunks
 
     def create_faiss_index(self, documents: List[Dict], index_name: str):
