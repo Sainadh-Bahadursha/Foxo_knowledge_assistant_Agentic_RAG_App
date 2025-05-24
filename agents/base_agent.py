@@ -12,7 +12,7 @@ os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 class FOXOAgent:
     def __init__(self, retriever):
         self.llm = ChatOpenAI(
-            model_name="gpt-4o-mini",
+            model_name="gpt-4o",
             temperature=0
         )
 

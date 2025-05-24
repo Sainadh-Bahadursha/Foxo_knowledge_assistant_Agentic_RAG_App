@@ -14,7 +14,11 @@ def get_tools(retriever):
         Tool(
             name="DocumentQA",
             func=lambda q: qa_tool.ask(q)["answer"],
-            description="Answer questions based on internal company documents. If unsure, say 'I don't know'."
+            description="""Answer questions based on internal company documents. Interanl rag documents consists of
+            1. Nutrition, Exercise, and Stress Management for Treatment and Prevention of Psychiatric Disorders 
+            2. Info related to sleep,
+            3.community_logs.txt which consists of basic doubts related to FOXO app
+            If unsure, say 'I don't know'."""
         ),
         Tool(
             name="WebSearch",
